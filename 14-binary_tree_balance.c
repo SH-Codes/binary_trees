@@ -1,6 +1,6 @@
 #include "binary_trees.h"
 
-/* Function prototypes */
+/* Function prototype */
 size_t binary_tree_height(const binary_tree_t *tree);
 
 /**
@@ -11,13 +11,10 @@ size_t binary_tree_height(const binary_tree_t *tree);
  */
 int binary_tree_balance(const binary_tree_t *tree)
 {
-	if (tree == NULL)
-		return (0);
-
-	size_t left_height = binary_tree_height(tree->left);
-	size_t right_height = binary_tree_height(tree->right);
-
-	return ((int)(left_height - right_height));
+	if (tree)
+		return (binary_tree_height(tree->left) -
+				binary_tree_height(tree->right));
+	return (0);
 }
 
 /**
@@ -28,15 +25,13 @@ int binary_tree_balance(const binary_tree_t *tree)
  */
 size_t binary_tree_height(const binary_tree_t *tree)
 {
-	if (tree == NULL)
-		return (0);
+	if (tree)
+	{
+		size_t l = 0, r = 0;
 
-	size_t left_height = binary_tree_height(tree->left);
-	size_t right_height = binary_tree_height(tree->right);
-
-	if (left_height > right_height)
-		return (left_height + 1);
-
-	else
-		return (right_height + 1);
+		l = tree->left ? 1 + binary_tree_height(tree->left) : 1;
+		r = tree->right ? 1 + binary_tree_height(tree->right) : 1;
+		return ((l > r) ? l : r);
+	}
+	return (0);
 }
